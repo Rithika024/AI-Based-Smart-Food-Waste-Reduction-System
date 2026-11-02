@@ -1,0 +1,86 @@
+
+generator client {
+  provider = "prisma-client"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model Student {
+  id           Int                @id @default(autoincrement())
+  rollNumber   String             @unique
+  name         String
+  createdAt    DateTime           @default(now())
+  registrations MealRegistration[]
+}
+
+model MealSession {
+  id                  Int                @id @default(autoincrement())
+  date                DateTime
+  mealType            String
+  registrationDeadline DateTime?
+  status              String             @default("OPEN")
+  createdAt           DateTime           @default(now())
+  sessionMenu         SessionMenu[]
+  registrations       MealRegistration[]
+
+  @@unique([date, mealType])
+}
+
+model MenuItem {
+  id          Int           @id @default(autoincrement())
+  name        String        @unique
+  category    String?
+  description String?
+  isActive    Boolean       @default(true)
+  createdAt   DateTime      @default(now())
+  sessionMenu SessionMenu[]
+}
+
+model SessionMenu {
+  id            Int                @id @default(autoincrement())
+  mealSessionId Int
+  menuItemId    Int
+  session       MealSession        @relation(fields: [mealSessionId], references: [id], onDelete: Cascade)
+  menuItem      MenuItem           @relation(fields: [menuItemId], references: [id])
+  registrations RegistrationItem[]
+  wasteRecord   WasteRecord?
+
+  @@unique([mealSessionId, menuItemId])
+}
+
+model MealRegistration {
+  id          Int                @id @default(autoincrement())
+  studentId   Int
+  mealSessionId Int
+  registeredAt DateTime          @default(now())
+  student     Student            @relation(fields: [studentId], references: [id])
+  mealSession MealSession        @relation(fields: [mealSessionId], references: [id], onDelete: Cascade)
+  selectedItems RegistrationItem[]
+
+  @@unique([studentId, mealSessionId])
+}
+
+model RegistrationItem {
+  id                 Int             @id @default(autoincrement())
+  registrationId     Int
+  sessionMenuId      Int
+  registration       MealRegistration @relation(fields: [registrationId], references: [id], onDelete: Cascade)
+  sessionMenu        SessionMenu      @relation(fields: [sessionMenuId], references: [id])
+
+  @@unique([registrationId, sessionMenuId])
+}
+
+model WasteRecord {
+  id            Int         @id @default(autoincrement())
+  sessionMenuId Int         @unique
+  preparedKg    Float       @default(0)
+  servedKg      Float       @default(0)
+  leftoverKg    Float       @default(0)
+  discardedKg   Float       @default(0)
+  recordedAt    DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  sessionMenu   SessionMenu @relation(fields: [sessionMenuId], references: [id], onDelete: Cascade)
+}
