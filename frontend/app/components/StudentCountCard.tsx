@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useEffect, useState } from "react";
 
@@ -12,7 +12,9 @@ export default function StudentCountCard() {
 
     async function fetchStudentCount() {
       try {
-        const response = await fetch("/api/students");
+        const response = await fetch("/api/students", {
+          cache: "no-store",
+        });
 
         if (!response.ok) {
           throw new Error("Failed to fetch students");
@@ -26,6 +28,7 @@ export default function StudentCountCard() {
 
         if (active) {
           setCount(result.count);
+          setError(false);
         }
       } catch {
         if (active) {
@@ -40,8 +43,11 @@ export default function StudentCountCard() {
 
     fetchStudentCount();
 
+    window.addEventListener("students-updated", fetchStudentCount);
+
     return () => {
       active = false;
+      window.removeEventListener("students-updated", fetchStudentCount);
     };
   }, []);
 
@@ -49,11 +55,11 @@ export default function StudentCountCard() {
     <article className="stat-card">
       <div className="stat-top">
         <span>Registered students</span>
-        <span className="stat-icon">👥</span>
+        <span className="stat-icon">??</span>
       </div>
 
       <strong className="stat-value">
-        {loading ? "..." : error ? "—" : count}
+        {loading ? "..." : error ? "?" : count}
       </strong>
 
       <small>

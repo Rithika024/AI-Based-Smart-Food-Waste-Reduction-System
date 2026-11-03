@@ -1,4 +1,5 @@
 import StudentCountCard from "./components/StudentCountCard";
+import StudentRegistrationForm from "./components/StudentRegistrationForm";
 
 const meals = [
   { name: "Breakfast", time: "7:30 AM – 9:00 AM", dishes: "Idli, Dosa, Sambar", status: "Completed" },
@@ -100,6 +101,8 @@ export default function Home() {
               </article>
             ))}
           </section>
+
+          <StudentRegistrationForm />
 
           <div className="middle-grid">
             <section className="panel" id="meals">

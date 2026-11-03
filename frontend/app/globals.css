@@ -585,3 +585,96 @@ a {
     flex-direction: column;
   }
 }
+/* Student registration form */
+.registration-panel {
+  margin-top: 19px;
+}
+
+.registration-description {
+  color: #78857b;
+  font-size: 13px;
+  line-height: 1.6;
+  margin: 14px 0 18px;
+}
+
+.registration-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  align-items: end;
+  gap: 15px;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-field label {
+  color: #405b48;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.form-field input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #dce7dc;
+  border-radius: 8px;
+  background: #fbfdfb;
+  color: #1b422a;
+  font: inherit;
+  font-size: 13px;
+}
+
+.form-field input:focus {
+  outline: 2px solid #a8cbb0;
+  border-color: #28653d;
+}
+
+.registration-button {
+  padding: 12px 18px;
+  border: none;
+  border-radius: 8px;
+  background: #28653d;
+  color: white;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.registration-button:hover {
+  background: #174b2b;
+}
+
+.registration-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.registration-message {
+  margin-top: 15px;
+  padding: 11px 13px;
+  border-radius: 8px;
+  font-size: 13px;
+}
+
+.registration-message.success {
+  background: #edf7ee;
+  color: #245438;
+}
+
+.registration-message.error {
+  background: #fff0ef;
+  color: #a12d2d;
+}
+
+@media (max-width: 700px) {
+  .registration-form {
+    grid-template-columns: 1fr;
+  }
+
+  .registration-button {
+    width: 100%;
+  }
+}
