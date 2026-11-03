@@ -1,0 +1,16 @@
+{
+    "model": "Random Forest Regressor",
+    "dataset": "Synthetic mess dataset",
+    "total_records": 5475,
+    "training_records": 4380,
+    "testing_records": 1095,
+    "test_start_date": "2025-10-20",
+    "test_end_date": "2025-12-31",
+    "model_mae": 11.0878,
+    "model_rmse": 13.592,
+    "model_r2": 0.8008,
+    "baseline": "Historical demand",
+    "baseline_mae": 24.8083,
+    "baseline_rmse": 29.8268,
+    "mae_improvement_percent": 55.31
+}

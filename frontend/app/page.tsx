@@ -2,6 +2,7 @@ import StudentCountCard from "./components/StudentCountCard";
 import StudentRegistrationForm from "./components/StudentRegistrationForm";
 import MealRegistrationForm from "./components/MealRegistrationForm";
 import WasteRecordingForm from "./components/WasteRecordingForm";
+import AIDemandInsights from "./components/AIDemandInsights";
 import { prisma } from "../lib/prisma";
 
 const meals = [
@@ -189,6 +190,7 @@ export default async function Home() {
           </div>
 
           <WasteRecordingForm />
+          <AIDemandInsights />
 
           <section className="panel waste-panel" id="waste">
             <div className="panel-heading">
