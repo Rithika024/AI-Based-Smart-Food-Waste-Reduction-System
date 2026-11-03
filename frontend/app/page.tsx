@@ -1,6 +1,7 @@
 import StudentCountCard from "./components/StudentCountCard";
 import StudentRegistrationForm from "./components/StudentRegistrationForm";
 import MealRegistrationForm from "./components/MealRegistrationForm";
+import WasteRecordingForm from "./components/WasteRecordingForm";
 import { prisma } from "../lib/prisma";
 
 const meals = [
@@ -186,6 +187,8 @@ export default async function Home() {
               <p className="method-note">Rule-based estimate using live database registrations and a 5% safety margin. Not a trained ML prediction.</p>
             </section>
           </div>
+
+          <WasteRecordingForm />
 
           <section className="panel waste-panel" id="waste">
             <div className="panel-heading">
