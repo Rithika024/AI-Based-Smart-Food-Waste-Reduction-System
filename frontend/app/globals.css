@@ -678,3 +678,108 @@ a {
     width: 100%;
   }
 }
+
+/* Meal registration form */
+.meal-registration-panel {
+  margin-top: 19px;
+}
+
+.meal-booking-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.meal-booking-form .form-field input,
+.meal-booking-form .form-field select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #dce7dc;
+  border-radius: 8px;
+  background: #fbfdfb;
+  color: #1b422a;
+  font: inherit;
+  font-size: 13px;
+}
+
+.meal-booking-form .form-field input:focus,
+.meal-booking-form .form-field select:focus {
+  outline: 2px solid #a8cbb0;
+  border-color: #28653d;
+}
+
+.meal-menu-selection {
+  padding: 16px;
+  border: 1px solid #e0eae0;
+  border-radius: 10px;
+  background: #fbfdfb;
+}
+
+.meal-menu-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+  color: #245438;
+  font-size: 13px;
+}
+
+.meal-menu-heading span {
+  color: #78857b;
+  font-size: 12px;
+}
+
+.meal-menu-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.meal-menu-option {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 13px;
+  border: 1px solid #dce7dc;
+  border-radius: 8px;
+  background: white;
+  color: #405b48;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.meal-menu-option input {
+  width: 15px;
+  height: 15px;
+  accent-color: #28653d;
+  cursor: pointer;
+}
+
+.meal-menu-option:has(input:checked) {
+  border-color: #7eae89;
+  background: #edf7ee;
+}
+
+.meal-registration-note {
+  padding: 14px;
+  border-radius: 8px;
+  background: #f3f7f2;
+  color: #526b58;
+  font-size: 13px;
+}
+
+@media (max-width: 700px) {
+  .meal-menu-options {
+    flex-direction: column;
+  }
+
+  .meal-menu-option {
+    width: 100%;
+  }
+
+  .meal-menu-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}

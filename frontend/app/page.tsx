@@ -1,16 +1,12 @@
 import StudentCountCard from "./components/StudentCountCard";
 import StudentRegistrationForm from "./components/StudentRegistrationForm";
+import MealRegistrationForm from "./components/MealRegistrationForm";
+import { prisma } from "../lib/prisma";
 
 const meals = [
   { name: "Breakfast", time: "7:30 AM – 9:00 AM", dishes: "Idli, Dosa, Sambar", status: "Completed" },
   { name: "Lunch", time: "12:30 PM – 2:00 PM", dishes: "Rice, Dal, Vegetable Curry", status: "Upcoming" },
   { name: "Dinner", time: "7:30 PM – 9:00 PM", dishes: "Chapati, Paneer Curry, Dal", status: "Upcoming" },
-];
-
-const stats = [
-  { label: "Estimated demand", value: "265", note: "Rule-based estimate", icon: "📊" },
-  { label: "Recommended servings", value: "278", note: "Including safety margin", icon: "🍽️" },
-  { label: "Food waste recorded", value: "18 kg", note: "Sample demonstration", icon: "♻️" },
 ];
 
 const weeklyWaste = [
@@ -23,7 +19,41 @@ const weeklyWaste = [
   { day: "Sun", value: 24 },
 ];
 
-export default function Home() {
+export default async function Home() {
+  const activeMealSession = await prisma.mealSession.findFirst({
+    where: { status: "OPEN" },
+    orderBy: { date: "asc" },
+    include: {
+      _count: {
+        select: { registrations: true },
+      },
+    },
+  });
+
+  const registeredStudents = activeMealSession?._count.registrations ?? 0;
+  const recommendedServings = Math.ceil(registeredStudents * 1.05);
+
+  const stats = [
+    {
+      label: "Estimated demand",
+      value: String(registeredStudents),
+      note: "Current meal registrations",
+      icon: "??",
+    },
+    {
+      label: "Recommended servings",
+      value: String(recommendedServings),
+      note: "Including 5% safety margin",
+      icon: "???",
+    },
+    {
+      label: "Food waste recorded",
+      value: "18 kg",
+      note: "Sample demonstration",
+      icon: "??",
+    },
+  ];
+
   return (
     <main className="dashboard-shell">
       <aside className="sidebar">
@@ -103,6 +133,7 @@ export default function Home() {
           </section>
 
           <StudentRegistrationForm />
+        <MealRegistrationForm />
 
           <div className="middle-grid">
             <section className="panel" id="meals">
@@ -139,20 +170,20 @@ export default function Home() {
                 <span className="recommendation-icon">✦</span>
               </div>
               <div className="recommendation-box">
-                <span>Illustrative recommended quantity</span>
-                <strong>278 <small>servings</small></strong>
-                <p>Based on registrations, historical demand and a sample safety margin.</p>
+                <span>Recommended quantity for {activeMealSession?.mealType ?? "no open meal session"}</span>
+                <strong>{recommendedServings} <small>servings</small></strong>
+                <p>Calculated from live registrations with a 5% safety margin.</p>
               </div>
               <div className="calculation-row">
-                <span>Registered students</span><strong>248</strong>
+                <span>Registered students</span><strong>{registeredStudents}</strong>
               </div>
               <div className="calculation-row">
-                <span>Historical average</span><strong>265</strong>
+                <span>Meal session</span><strong>{activeMealSession?.mealType ?? "None open"}</strong>
               </div>
               <div className="calculation-row">
                 <span>Safety margin</span><strong>5%</strong>
               </div>
-              <p className="method-note">Demonstration values only. Live recommendations will use database records.</p>
+              <p className="method-note">Rule-based estimate using live database registrations and a 5% safety margin. Not a trained ML prediction.</p>
             </section>
           </div>
 
