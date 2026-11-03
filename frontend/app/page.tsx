@@ -1,3 +1,5 @@
+import { Suspense } from "react";
+import { connection } from "next/server";
 import StudentCountCard from "./components/StudentCountCard";
 import StudentRegistrationForm from "./components/StudentRegistrationForm";
 import MealRegistrationForm from "./components/MealRegistrationForm";
@@ -21,7 +23,9 @@ const weeklyWaste = [
   { day: "Sun", value: 24 },
 ];
 
-export default async function Home() {
+async function DashboardContent() {
+  await connection();
+
   const activeMealSession = await prisma.mealSession.findFirst({
     where: { status: "OPEN" },
     orderBy: { date: "asc" },
@@ -221,5 +225,19 @@ export default async function Home() {
         </div>
       </section>
     </main>
+  );
+}
+
+export default function Home() {
+  return (
+    <Suspense
+      fallback={
+        <main className="dashboard-shell">
+          <p>Loading MessMind dashboard...</p>
+        </main>
+      }
+    >
+      <DashboardContent />
+    </Suspense>
   );
 }
