@@ -1,3 +1,4 @@
+import StudentCountCard from "./components/StudentCountCard";
 
 const meals = [
   { name: "Breakfast", time: "7:30 AM – 9:00 AM", dishes: "Idli, Dosa, Sambar", status: "Completed" },
@@ -6,7 +7,6 @@ const meals = [
 ];
 
 const stats = [
-  { label: "Registered for meals", value: "248", note: "Sample registrations", icon: "👥" },
   { label: "Estimated demand", value: "265", note: "Rule-based estimate", icon: "📊" },
   { label: "Recommended servings", value: "278", note: "Including safety margin", icon: "🍽️" },
   { label: "Food waste recorded", value: "18 kg", note: "Sample demonstration", icon: "♻️" },
@@ -88,6 +88,7 @@ export default function Home() {
           </div>
 
           <section className="stats-grid">
+            <StudentCountCard />
             {stats.map((stat) => (
               <article className="stat-card" key={stat.label}>
                 <div className="stat-top">
